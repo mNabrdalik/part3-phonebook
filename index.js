@@ -1,8 +1,23 @@
+//express.js
 const express = require('express')
 const app = express()
 
 //to parse json in express
 app.use(express.json())
+
+// middleware
+const morgan = require('morgan')
+app.use(morgan('tiny'))
+
+morgan.token('body', (req) => {
+  return JSON.stringify(req.body); // Convert body to a string
+});
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
+
+app.post('/api/persons', (req, res) => {
+  res.send('POST request received');
+});
 
 let persons = [
     { 
@@ -91,5 +106,5 @@ app.post('/api/persons', (request, response) => {
 
 const PORT = 3001
 app.listen(PORT, () => {
-console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 })
