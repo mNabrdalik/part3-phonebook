@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 //to parse json in express
 app.use(express.json())
+app.use(express.static('dist'))
 
 // middleware
 const morgan = require('morgan')
